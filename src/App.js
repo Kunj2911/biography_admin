@@ -15,7 +15,9 @@ import UpdateBanner from './components/UpdateBanner';
 import UpdatePerson from './components/UpdatePerson';
 import UpdateCategories from './components/UpdateCategories';
 import PersonProfile from "./components/PersonProfile";
-
+import MostRead from "./components/MostRead";
+import AppUpdateAdd from './components/AppUpdateAdd';
+import AppUpdateList from './components/AppUpdateList';
 
 function App() {
   return (
@@ -123,6 +125,18 @@ function App() {
               </Layout>
             }
           />
+          <Route
+            path="/most-read"
+            element={
+              <Layout>
+                <MostRead />
+              </Layout>
+            }
+          />
+
+          <Route path="/app-update-add" element={<Layout><AppUpdateAdd /></Layout>} />
+          <Route path="/app-update-list" element={<Layout><AppUpdateList /></Layout>} />
+
 
         </Route>
       </Routes>

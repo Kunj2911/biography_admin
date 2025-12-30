@@ -57,6 +57,17 @@ const Nav = () => {
           {/* Setting */}
           <li><Link to="/setting">Setting</Link></li>
 
+          <li>
+            <span onClick={() => toggleMenu("appupdate")}>App Update</span>
+            {openMenu === "appupdate" && (
+              <ul className="submenu">
+                <li><Link to="/app-update-list">App Update List</Link></li>
+                <li><Link to="/app-update-add">Add App Update</Link></li>
+              </ul>
+            )}
+          </li>
+
+
           {/* Logout */}
           <li>
             <button onClick={logout}>
@@ -75,4 +86,3 @@ const Nav = () => {
 };
 
 export default Nav;
- 
