@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 const UpdatePerson = () => {
-  const { id } = useParams(); // person id
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -24,13 +24,13 @@ const UpdatePerson = () => {
   const [person_multiple_img, setPersonMultipleImg] = useState([]);
   const [message, setMessage] = useState("");
 
-  // ✅ Fetch categories
+  /* ---------------- FETCH CATEGORIES ---------------- */
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const res = await fetch("http://localhost:7000/categories");
         const data = await res.json();
-        if (data.categories) {
+        if (data.status && data.categories) {
           setCategories(data.categories);
         }
       } catch (err) {
@@ -40,28 +40,30 @@ const UpdatePerson = () => {
     fetchCategories();
   }, []);
 
-  // ✅ Fetch person details
+  /* ---------------- FETCH PERSON (OLD DATA) ---------------- */
   useEffect(() => {
     const fetchPerson = async () => {
       try {
         const res = await fetch(`http://localhost:7000/persons/${id}`);
         const data = await res.json();
 
-        if (data && data.person) {
+        if (data.status && data.person) {
+          const p = data.person;
+
           setFormData({
-            category_id: data.person.category_id || "",
-            name: data.person.name || "",
-            education: data.person.education || "",
-            title: data.person.title || "",
-            dob: data.person.dob ? data.person.dob.split("T")[0] : "",
-            dob_place: data.person.dob_place || "",
-            date_of_death: data.person.date_of_death
-              ? data.person.date_of_death.split("T")[0]
+            category_id: p.category_id?._id || "",
+            name: p.name || "",
+            education: p.education || "",
+            title: p.title || "",
+            dob: p.dob ? p.dob.substring(0, 10) : "",
+            dob_place: p.dob_place || "",
+            date_of_death: p.date_of_death
+              ? p.date_of_death.substring(0, 10)
               : "",
-            place_of_death: data.person.place_of_death || "",
-            affiliation: data.person.affiliation || "",
-            short_description: data.person.short_description || "",
-            description: data.person.description || "",
+            place_of_death: p.place_of_death || "",
+            affiliation: p.affiliation || "",
+            short_description: p.short_description || "",
+            description: p.description || "",
           });
         }
       } catch (err) {
@@ -72,15 +74,12 @@ const UpdatePerson = () => {
     fetchPerson();
   }, [id]);
 
-  // ✅ handle input text change
+  /* ---------------- HANDLE INPUT CHANGE ---------------- */
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // ✅ handle file change
+  /* ---------------- HANDLE FILE CHANGE ---------------- */
   const handleFileChange = (e) => {
     if (e.target.name === "persons_image") {
       setPersonsImage(e.target.files[0]);
@@ -89,41 +88,44 @@ const UpdatePerson = () => {
     }
   };
 
-  // ✅ handle submit
+  /* ---------------- SUBMIT UPDATE ---------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = new FormData();
-    Object.keys(formData).forEach((key) => {
-      if (formData[key]) {
-        data.append(key, formData[key]);
+    const fd = new FormData();
+
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value !== "") {
+        fd.append(key, value);
       }
     });
 
     if (persons_image) {
-      data.append("persons_image", persons_image);
+      fd.append("persons_image", persons_image);
     }
+
     if (person_multiple_img.length > 0) {
       for (let i = 0; i < person_multiple_img.length; i++) {
-        data.append("person_multiple_img", person_multiple_img[i]);
+        fd.append("person_multiple_img", person_multiple_img[i]);
       }
     }
 
     try {
       const res = await fetch(`http://localhost:7000/persons/${id}`, {
         method: "PUT",
-        body: data,
+        body: fd,
       });
 
       const result = await res.json();
+
       if (result.status) {
         setMessage("✅ Person updated successfully!");
-        setTimeout(() => navigate("/persons"), 1500);
+        setTimeout(() => navigate("/personlist"), 1200);
       } else {
-        setMessage("❌ Failed: " + result.message);
+        setMessage("❌ Failed: " + (result.message || "Update failed"));
       }
-    } catch (error) {
-      console.error("Error updating person:", error);
+    } catch (err) {
+      console.error("Error updating person:", err);
       setMessage("❌ Error occurred while updating person.");
     }
   };
@@ -131,8 +133,9 @@ const UpdatePerson = () => {
   return (
     <div className="update-person-container">
       <h2>Update Person</h2>
+
       <form onSubmit={handleSubmit} className="update-form">
-        {/* ✅ Category Dropdown */}
+        {/* CATEGORY */}
         <label>Category</label>
         <select
           name="category_id"
@@ -142,8 +145,8 @@ const UpdatePerson = () => {
         >
           <option value="">Select Category</option>
           {categories.map((cat) => (
-            <option key={cat._id || cat.id} value={cat._id || cat.id}>
-              {cat.category_name || "Unnamed Category"}
+            <option key={cat._id} value={cat._id}>
+              {cat.category_name}
             </option>
           ))}
         </select>
@@ -151,7 +154,7 @@ const UpdatePerson = () => {
         <input
           type="text"
           name="name"
-          placeholder="Enter Name"
+          placeholder="Name"
           value={formData.name}
           onChange={handleChange}
         />
@@ -159,7 +162,7 @@ const UpdatePerson = () => {
         <input
           type="text"
           name="education"
-          placeholder="Enter Education"
+          placeholder="Education"
           value={formData.education}
           onChange={handleChange}
         />
@@ -167,17 +170,12 @@ const UpdatePerson = () => {
         <input
           type="text"
           name="title"
-          placeholder="Enter Title"
+          placeholder="Title"
           value={formData.title}
           onChange={handleChange}
         />
 
-        <input
-          type="date"
-          name="dob"
-          value={formData.dob}
-          onChange={handleChange}
-        />
+        <input type="date" name="dob" value={formData.dob} onChange={handleChange} />
 
         <input
           type="text"
@@ -225,10 +223,10 @@ const UpdatePerson = () => {
           onChange={handleChange}
         />
 
-        <label>Profile Image:</label>
+        <label>Profile Image</label>
         <input type="file" name="persons_image" onChange={handleFileChange} />
 
-        <label>Multiple Images:</label>
+        <label>Multiple Images</label>
         <input
           type="file"
           name="person_multiple_img"

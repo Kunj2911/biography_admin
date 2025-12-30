@@ -902,3 +902,98 @@ p {
   border-radius: 5px;
 }
  */
+
+ /* ======================
+   SIMPLE OLD STYLE FORM
+   ====================== */
+
+.form-container,
+.update-person-container {
+  width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-container h2,
+.update-person-container h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* -------- FORM GROUP -------- */
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+/* -------- INPUTS -------- */
+
+.form-container input,
+.form-container textarea,
+.form-container select,
+.update-person-container input,
+.update-person-container textarea,
+.update-person-container select {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+/* -------- FILE INPUT -------- */
+
+input[type="file"] {
+  border: none;
+  padding: 3px 0;
+}
+
+/* -------- BUTTON -------- */
+
+button {
+  width: 100%;
+  padding: 8px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* -------- MESSAGE -------- */
+
+.update-person-container p {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+  color: green;
+}
+
+/* -------- MOBILE -------- */
+
+@media (max-width: 600px) {
+  .form-container,
+  .update-person-container {
+    width: 95%;
+  }
+}
