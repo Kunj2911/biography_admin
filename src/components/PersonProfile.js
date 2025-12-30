@@ -62,7 +62,7 @@ const PersonProfile = () => {
       </p>
 
       <p><strong>Date of Death:</strong>{" "}
-        {person.date_of_death
+        {person.date_of_death 
           ? new Date(person.date_of_death).toLocaleDateString()
           : "Alive"}
       </p>
