@@ -1,33 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   // Fetch categories
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [location.key]); // 👈 REFRESH ON NAVIGATION
+
 
   const fetchCategories = async () => {
     try {
       const res = await fetch("http://localhost:7000/categories");
       const data = await res.json();
 
-      console.log("Fetched categories:", data); // 🔎 debug
+      console.log("Fetched categories:", data);
 
-      if (data && (data.categories || data.data)) {
-        setCategories(data.categories || data.data);
+      if (data?.status === true && Array.isArray(data.categories)) {
+        setCategories(data.categories);
       } else {
         setCategories([]);
       }
     } catch (err) {
       console.error("Error fetching categories:", err);
+      setCategories([]);
     } finally {
       setLoading(false);
     }
   };
+
 
   // Delete Category
   const handleDelete = async (id) => {

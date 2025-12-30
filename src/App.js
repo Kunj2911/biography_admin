@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route , Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import PrivateComponent from './components/PrivateComponent';
 import Layout from './components/Layout';
 import SignUp from './components/SignUp';
@@ -21,12 +21,20 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        
+
         {/* Private pages (with navbar inside Layout) */}
-         
+
         <Route element={<PrivateComponent />}>
           <Route
             path="/"
+            element={
+              <Layout>
+                <Category />
+              </Layout>
+            }
+          />
+          <Route
+            path="/categories"
             element={
               <Layout>
                 <Category />

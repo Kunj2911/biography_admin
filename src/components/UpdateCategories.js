@@ -108,7 +108,10 @@ const UpdateCategory = () => {
 
       if (data.status) {
         setMessage("✅ Category updated successfully!");
-        setTimeout(() => navigate("/categories"), 1500);
+        setTimeout(() => {
+          window.location.href = "/categories";
+        }, 1500);
+
       } else {
         setMessage("❌ Failed: " + (data.message || "Unknown error"));
       }
