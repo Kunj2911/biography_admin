@@ -81,13 +81,11 @@ const PersonList = () => {
               </div>
 
               <div className="person-details">
-                <p><strong>Title:</strong> {person.title || "N/A"}</p>
                 <p><strong>Education:</strong> {person.education || "N/A"}</p>
                 <p><strong>DOB:</strong> {person.dob ? new Date(person.dob).toLocaleDateString() : "N/A"}</p>
                 <p><strong>Place of Birth:</strong> {person.dob_place || "N/A"}</p>
                 <p><strong>Date of Death:</strong> {person.date_of_death ? new Date(person.date_of_death).toLocaleDateString() : "N/A"}</p>
                 <p><strong>Place of Death:</strong> {person.place_of_death || "N/A"}</p>
-                <p><strong>Affiliation:</strong> {person.affiliation || "N/A"}</p>
                 <p><strong>Short Description:</strong> {person.short_description || "N/A"}</p>
                 <p><strong>Description:</strong> {person.description || "N/A"}</p>
                 <p><strong>Views:</strong> {person.views || 0}</p>

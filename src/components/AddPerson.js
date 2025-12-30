@@ -4,13 +4,11 @@ const AddPerson = () => {
   const [formData, setFormData] = useState({
     category_id: "",
     name: "",
-    title: "",
     education: "",
     dob: "",
     dob_place: "",
     date_of_death: "",
     place_of_death: "",
-    affiliation: "",
     short_description: "",
     full_details: "",
     description: "",
@@ -80,13 +78,11 @@ const AddPerson = () => {
         setFormData({
           category_id: "",
           name: "",
-          title: "",
           education: "",
           dob: "",
           dob_place: "",
           date_of_death: "",
           place_of_death: "",
-          affiliation: "",
           short_description: "",
           full_details: "",
           description: "",
@@ -123,7 +119,6 @@ const AddPerson = () => {
         </select>
 
         <input name="name" placeholder="Name" value={formData.name} onChange={handleChange} />
-        <input name="title" placeholder="Title" value={formData.title} onChange={handleChange} />
         <input name="education" placeholder="Education" value={formData.education} onChange={handleChange} />
 
         <label>Date of Birth</label>
@@ -135,8 +130,6 @@ const AddPerson = () => {
         <input type="date" name="date_of_death" value={formData.date_of_death} onChange={handleChange} />
 
         <input name="place_of_death" placeholder="Place of Death" value={formData.place_of_death} onChange={handleChange} />
-
-        <input name="affiliation" placeholder="Affiliation" value={formData.affiliation} onChange={handleChange} />
 
         <textarea name="short_description" placeholder="Short Description" value={formData.short_description} onChange={handleChange} />
         <textarea name="full_details" placeholder="Full Details" value={formData.full_details} onChange={handleChange} />

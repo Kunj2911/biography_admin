@@ -8,16 +8,15 @@ const PersonProfile = () => {
 
   // 🔥 UNIQUE VIEW LOGIC (ONE VIEW PER DEVICE)
   useEffect(() => {
-    const viewedPersons =
-      JSON.parse(localStorage.getItem("viewedPersons")) || [];
+    if (!id) return;
+
+    const key = "viewedPersons";
+    const viewedPersons = JSON.parse(localStorage.getItem(key)) || [];
 
     if (!viewedPersons.includes(id)) {
-      fetch(`http://localhost:7000/persons/${id}/view`, {
-        method: "POST",
-      });
-
-      viewedPersons.push(id);
-      localStorage.setItem("viewedPersons", JSON.stringify(viewedPersons));
+      fetch(`http://localhost:7000/persons/${id}/view`, { method: "POST" })
+        .catch(() => {});
+      localStorage.setItem(key, JSON.stringify([...viewedPersons, id]));
     }
   }, [id]);
 
@@ -56,11 +55,26 @@ const PersonProfile = () => {
         />
       )}
 
-      <p><strong>Category:</strong> {person.category_id?.category_name}</p>
-      <p><strong>Title:</strong> {person.title}</p>
-      <p><strong>Education:</strong> {person.education}</p>
-      <p><strong>Views:</strong> {person.views}</p>
-      <p><strong>Description:</strong> {person.description}</p>
+      <p><strong>Category:</strong> {person.category_id?.category_name || "N/A"}</p>
+
+      <p><strong>Date of Birth:</strong>{" "}
+        {person.dob ? new Date(person.dob).toLocaleDateString() : "N/A"}
+      </p>
+
+      <p><strong>Date of Death:</strong>{" "}
+        {person.date_of_death
+          ? new Date(person.date_of_death).toLocaleDateString()
+          : "Alive"}
+      </p>
+
+      <p><strong>Views:</strong> {person.views || 0}</p>
+
+      <p><strong>Trending:</strong> {person.isTrending ? "Yes 🔥" : "No"}</p>
+
+      <p><strong>New Arrival:</strong> {person.isNewArrival ? "Yes 🆕" : "No"}</p>
+
+      <p><strong>Description:</strong></p>
+      <p>{person.description}</p>
     </div>
   );
 };

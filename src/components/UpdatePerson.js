@@ -167,13 +167,7 @@ const UpdatePerson = () => {
           onChange={handleChange}
         />
 
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={formData.title}
-          onChange={handleChange}
-        />
+        
 
         <input type="date" name="dob" value={formData.dob} onChange={handleChange} />
 
@@ -200,14 +194,7 @@ const UpdatePerson = () => {
           onChange={handleChange}
         />
 
-        <input
-          type="text"
-          name="affiliation"
-          placeholder="Affiliation"
-          value={formData.affiliation}
-          onChange={handleChange}
-        />
-
+      
         <input
           type="text"
           name="short_description"
