@@ -14,6 +14,8 @@ import BannerList from './components/BannerList';
 import UpdateBanner from './components/UpdateBanner';
 import UpdatePerson from './components/UpdatePerson';
 import UpdateCategories from './components/UpdateCategories';
+import PersonProfile from "./components/PersonProfile";
+
 
 function App() {
   return (
@@ -113,6 +115,15 @@ function App() {
               </Layout>
             }
           />
+          <Route
+            path="/person/:id"
+            element={
+              <Layout>
+                <PersonProfile />
+              </Layout>
+            }
+          />
+
         </Route>
       </Routes>
     </BrowserRouter>

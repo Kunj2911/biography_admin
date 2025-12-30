@@ -69,7 +69,12 @@ const PersonList = () => {
                 ) : (
                   <div className="no-img">N/A</div>
                 )}
-                <h3>{person.name}</h3>
+                <h3>
+                  <Link to={`/person/${person._id}`}>
+                    {person.name}
+                  </Link>
+                </h3>
+
                 <p className="category">
                   {person.category_id?.category_name || "N/A"}
                 </p>
@@ -91,7 +96,7 @@ const PersonList = () => {
                 <p><strong>Created At:</strong> {person.createdAt ? new Date(person.createdAt).toLocaleString() : "N/A"}</p>
                 <p><strong>Updated At:</strong> {person.updatedAt ? new Date(person.updatedAt).toLocaleString() : "N/A"}</p>
               </div>
-              
+
 
               {/* 🔴 Delete Button */}
               <button
