@@ -151,9 +151,7 @@ const UpdateCategory = () => {
         {preview.image && <img src={preview.image} alt="main" width="80" />}
         <input type="file" name="image" accept="image/*" onChange={handleFileChange} />
 
-        <label>Banner Image:</label>
-        {preview.banner_image && <img src={preview.banner_image} alt="banner" width="80" />}
-        <input type="file" name="banner_image" accept="image/*" onChange={handleFileChange} />
+        
 
         <button type="submit">Update Category</button>
       </form>
