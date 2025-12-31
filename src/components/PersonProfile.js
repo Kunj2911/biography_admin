@@ -69,9 +69,9 @@ const PersonProfile = () => {
 
       <p><strong>Views:</strong> {person.views || 0}</p>
 
-      <p><strong>Trending:</strong> {person.isTrending ? "Yes 🔥" : "No"}</p>
+      <p><strong>Trending:</strong> {person.isTrending ? "Yes " : "No"}</p>
 
-      <p><strong>New Arrival:</strong> {person.isNewArrival ? "Yes 🆕" : "No"}</p>
+      <p><strong>New Arrival:</strong> {person.isNewArrival ? "Yes " : "No"}</p>
 
       <p><strong>Description:</strong></p>
       <p>{person.description}</p>
